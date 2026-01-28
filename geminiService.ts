@@ -1,4 +1,3 @@
-
 import { GoogleGenAI, Type } from "@google/genai";
 import { SymptomAnalysis } from "./types";
 import { APP_CONFIG } from "./constants";
@@ -31,8 +30,9 @@ export async function analyzeSymptoms(userInput: string): Promise<SymptomAnalysi
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   
   try {
+    // Fixed: Using gemini-3-pro-preview for complex reasoning tasks as per guidelines
     const response = await ai.models.generateContent({
-      model: "gemini-3-flash-preview",
+      model: "gemini-3-pro-preview",
       contents: userInput,
       config: {
         systemInstruction: SYSTEM_INSTRUCTION,
@@ -57,7 +57,8 @@ export async function analyzeSymptoms(userInput: string): Promise<SymptomAnalysi
       }
     });
 
-    const resultStr = response.text.trim();
+    // Fixed: Handling potential undefined text property
+    const resultStr = response.text?.trim() || "{}";
     const result = JSON.parse(resultStr) as SymptomAnalysis;
     
     // Ensure the mandatory disclaimer is always correct regardless of model output
