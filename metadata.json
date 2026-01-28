@@ -1,0 +1,7 @@
+{
+  "name": "Med-Symptom Assistant",
+  "description": "An educational clinical reasoning tool for health awareness and symptom exploration, developed by medical students for educational purposes.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
